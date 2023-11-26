@@ -50,7 +50,7 @@ switch ($routeInfo[0]) {
             )
         );
         break;
-    case FastRoute\Dispatcher::METHOD_NOT_ALLOWED:
+    case Dispatcher::METHOD_NOT_ALLOWED:
         $allowedMethods = $routeInfo[1];
         header('Content-Type: application/json', true, 405);
         echo json_encode(
