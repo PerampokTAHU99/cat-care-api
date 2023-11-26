@@ -28,9 +28,9 @@ $dispatcher = simpleDispatcher(function(RouteCollector $route) {
             $diseasesRoute->get('/{id:\d+}/', 'getDiseaseById');
         });
 
-        $r->addGroup('/symptoms', function(RouteCollector $diseasesRoute) {
-            $diseasesRoute->get('/', 'getAllSymptom');
-            $diseasesRoute->get('/{id:\d+}/', 'getSymptomById');
+        $r->addGroup('/symptoms', function(RouteCollector $symptomsRoute) {
+            $symptomsRoute->get('/', 'getAllSymptom');
+            $symptomsRoute->get('/{id:\d+}/', 'getSymptomById');
         });
     });
 });
