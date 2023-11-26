@@ -14,23 +14,23 @@ use function FastRoute\simpleDispatcher;
 
 $dispatcher = simpleDispatcher(function(RouteCollector $route) {
     $route->addRoute(['GET', 'POST', 'PUT', 'PATCH', 'OPTIONS'], '/', 'root');
-    $route->post('/auth/login', 'login');
-    $route->post('/auth/logout', 'logout');
+    $route->post('/auth/login/', 'login');
+    $route->post('/auth/logout/', 'logout');
 
     $route->addGroup('/data', function(RouteCollector $r) {
         $r->addGroup('/diagnoses', function(RouteCollector $diagnosesRoute) {
             $diagnosesRoute->get('/', 'getAllDiagnose');
-            $diagnosesRoute->get('/{id:\d+}', 'getDiagnoseById');
+            $diagnosesRoute->get('/{id:\d+}/', 'getDiagnoseById');
         });
 
         $r->addGroup('/diseases', function(RouteCollector $diseasesRoute) {
             $diseasesRoute->get('/', 'getAllDisease');
-            $diseasesRoute->get('/{id:\d+}', 'getDiseaseById');
+            $diseasesRoute->get('/{id:\d+}/', 'getDiseaseById');
         });
 
         $r->addGroup('/symptoms', function(RouteCollector $diseasesRoute) {
             $diseasesRoute->get('/', 'getAllSymptom');
-            $diseasesRoute->get('/{id:\d+}', 'getSymptomById');
+            $diseasesRoute->get('/{id:\d+}/', 'getSymptomById');
         });
     });
 });
@@ -77,35 +77,35 @@ function root() {
             'message' => "Cat Care API",
             'endpoints' => [
                 '/auth' => [
-                    '/auth/login' => [
+                    '/auth/login/' => [
                         'POST' => "Proses Login untuk mendapatkan Token"
                     ],
-                    '/auth/logout' => [
+                    '/auth/logout/' => [
                         'POST' => "Proses Logout untuk menghancurkan Session"
                     ],
                 ],
                 '/data' => [
-                    '/diagnoses' => [
+                    '/diagnoses/' => [
                         'GET' => "Mengambil semua data history Diagnoses",
                         'POST' => "WIP"
                     ],
-                    '/diagnoses/{id}' => [
+                    '/diagnoses/{id}/' => [
                         'GET' => "Mengambil satu data history Diagnoses",
                         'PATCH' => "WIP",
                     ],
-                    '/symptoms' => [
+                    '/symptoms/' => [
                         'GET' => "Mengambil semua data Symptoms",
                         'POST' => "WIP"
                     ],
-                    '/symptoms/{id}' => [
+                    '/symptoms/{id}/' => [
                         'GET' => "Mengambil satu data Symptoms",
                         'PATCH' => "WIP"
                     ],
-                    '/diseases' => [
+                    '/diseases/' => [
                         'GET' => "Mengambil semua data Diseases",
                         'POST' => "WIP"
                     ],
-                    '/diseases/{id}' => [
+                    '/diseases/{id}/' => [
                         'GET' => "Mengambil satu data Diseases",
                         'PATCH' => "WIP"
                     ]
