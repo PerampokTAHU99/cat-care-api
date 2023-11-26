@@ -28,8 +28,6 @@ function getSymptomById($params) {
             'result' => $result
         )
     );
-
-    exit;
 }
 
 function getAllSymptom() {
@@ -54,8 +52,6 @@ function getAllSymptom() {
             'result' => $result
         )
     );
-
-    exit;
 }
 
 ?>

@@ -61,8 +61,6 @@ function login() {
             'token' => $jwt
         )
     );
-
-    exit;
 }
 
 ?>

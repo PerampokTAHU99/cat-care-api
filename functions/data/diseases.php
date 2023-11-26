@@ -32,8 +32,6 @@ function getDiseaseById($params) {
             'result' => $result
         )
     );
-
-    exit;
 }
 
 function getAllDisease() {
@@ -63,8 +61,6 @@ function getAllDisease() {
             'result' => $result
         )
     );
-
-    exit;
 }
 
 ?>

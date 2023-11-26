@@ -10,8 +10,6 @@ function logout() {
             'message' => 'Logout Berhasil.'
         ]
     );
-
-    exit;
 }
 
 ?>

@@ -30,8 +30,6 @@ function getDiagnoseById($params) {
             'result' => $result
         )
     );
-
-    exit;
 }
 
 function getAllDiagnose() {
@@ -73,8 +71,6 @@ function getAllDiagnose() {
             'result' => $result
         )
     );
-
-    exit;
 }
 
 ?>

@@ -113,8 +113,6 @@ function root() {
             ]
         )
     );
-
-    exit;
 }
 
 exit;

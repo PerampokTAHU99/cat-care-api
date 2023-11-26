@@ -28,8 +28,6 @@ function getAllUser() {
             'result' => $result
         )
     );
-
-    exit;
 }
 
 function getUserByRoleId($params) {
@@ -61,8 +59,6 @@ function getUserByRoleId($params) {
             'result' => $result
         )
     );
-
-    exit;
 }
 
 ?>
