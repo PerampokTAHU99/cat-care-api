@@ -53,9 +53,6 @@ function login() {
 
     $jwt = JWT::encode($payload, $_ENV['SECRET_KEY'], 'HS256');
 
-    session_start();
-    $_SESSION['isLoggedIn'] = true;
-
     header('Content-Type: application/json', true, 200);
     echo json_encode(
         array(
