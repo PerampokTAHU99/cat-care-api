@@ -41,8 +41,6 @@ function auth() {
 
         exit;
     }
-
-    exit;
 }
 
 ?>
