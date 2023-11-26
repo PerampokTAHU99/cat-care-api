@@ -38,7 +38,6 @@ function getAllDiagnose() {
     global $link;
 
     auth();
-    session_start();
 
     if ($_SESSION['roleId'] == 4002) {
         $query = mysqli_query(
