@@ -13,7 +13,7 @@ use FastRoute\Dispatcher;
 use function FastRoute\simpleDispatcher;
 
 $dispatcher = simpleDispatcher(function(RouteCollector $route) {
-    $route->addRoute(['GET', 'POST', 'PUT', 'PATCH'], '/', 'root');
+    $route->addRoute(['GET', 'POST', 'PUT', 'PATCH', 'OPTIONS'], '/', 'root');
     $route->post('/auth/login', 'login');
     $route->post('/auth/logout', 'logout');
 
