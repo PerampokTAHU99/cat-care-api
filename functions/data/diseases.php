@@ -37,7 +37,7 @@ function getDiseaseById($params) {
 function getAllDisease() {
     global $link;
 
-    $query = mysqli_query($link, "SELECT * FROM diseases");
+    $query = mysqli_query($link, "SELECT * FROM diseases ORDER BY nameOfDisease");
 
     $result = array();
     while ($row = mysqli_fetch_array($query)) {

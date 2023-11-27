@@ -33,7 +33,7 @@ function getSymptomById($params) {
 function getAllSymptom() {
     global $link;
 
-    $query = mysqli_query($link, "SELECT * FROM symptoms");
+    $query = mysqli_query($link, "SELECT * FROM symptoms ORDER BY descOfSymptom");
 
     $result = array();
     while ($row = mysqli_fetch_array($query)) {
