@@ -3,10 +3,10 @@ require_once __DIR__ . '/vendor/autoload.php';
 
 require_once 'functions/login.php';
 require_once 'functions/logout.php';
-require_once 'functions/data/diagnoses.php';
-require_once 'functions/data/diseases.php';
-require_once 'functions/data/symptoms.php';
-require_once 'functions/data/users.php';
+
+require_once 'routes/diagnoses.routes.php';
+require_once 'routes/diseases.routes.php';
+require_once 'routes/symptoms.routes.php';
 
 use FastRoute\RouteCollector;
 use FastRoute\Dispatcher;
@@ -18,20 +18,11 @@ $dispatcher = simpleDispatcher(function(RouteCollector $route) {
     $route->post('/auth/logout/', 'logout');
 
     $route->addGroup('/data', function(RouteCollector $r) {
-        $r->addGroup('/diagnoses', function(RouteCollector $diagnosesRoute) {
-            $diagnosesRoute->get('/', 'getAllDiagnose');
-            $diagnosesRoute->get('/{id:\d+}/', 'getDiagnoseById');
-        });
+        $r->addGroup('/diagnoses', 'diagnosesRoutes');
 
-        $r->addGroup('/diseases', function(RouteCollector $diseasesRoute) {
-            $diseasesRoute->get('/', 'getAllDisease');
-            $diseasesRoute->get('/{id:\d+}/', 'getDiseaseById');
-        });
+        $r->addGroup('/diseases', 'diseasesRoutes');
 
-        $r->addGroup('/symptoms', function(RouteCollector $symptomsRoute) {
-            $symptomsRoute->get('/', 'getAllSymptom');
-            $symptomsRoute->get('/{id:\d+}/', 'getSymptomById');
-        });
+        $r->addGroup('/symptoms', 'symptomsRoutes');
     });
 });
 
@@ -65,14 +56,25 @@ switch ($routeInfo[0]) {
         $handler = $routeInfo[1];
         $params = $routeInfo[2];
 
-        call_user_func($handler, $params);
+        try {
+            call_user_func($handler, $params);
+        }
+        catch (TypeError $e) {
+            header('Content-Type: application/json', true, 500);
+            echo json_encode(
+                array(
+                    'status' => 500,
+                    'message' => "Koneksi ke Database GAGAL (Configuration Error).",
+                    'debug' => "{$e}"
+                )
+            );
+        }
         break;
 }
 
 function root() {
-    header('Content-Type: application/json', true, 200);
-    echo json_encode(
-        array(
+    return Response::custom(
+        [
             'status' => 200,
             'message' => "Cat Care API",
             'endpoints' => [
@@ -93,14 +95,6 @@ function root() {
                         'GET' => "Mengambil satu data history Diagnoses",
                         'PATCH' => "WIP",
                     ],
-                    '/symptoms/' => [
-                        'GET' => "Mengambil semua data Symptoms",
-                        'POST' => "WIP"
-                    ],
-                    '/symptoms/{id}/' => [
-                        'GET' => "Mengambil satu data Symptoms",
-                        'PATCH' => "WIP"
-                    ],
                     '/diseases/' => [
                         'GET' => "Mengambil semua data Diseases",
                         'POST' => "WIP"
@@ -108,10 +102,18 @@ function root() {
                     '/diseases/{id}/' => [
                         'GET' => "Mengambil satu data Diseases",
                         'PATCH' => "WIP"
+                    ],
+                    '/symptoms/' => [
+                        'GET' => "Mengambil semua data Symptoms",
+                        'POST' => "WIP"
+                    ],
+                    '/symptoms/{id}/' => [
+                        'GET' => "Mengambil satu data Symptoms",
+                        'PATCH' => "WIP"
                     ]
                 ]
             ]
-        )
+        ]
     );
 }
 
