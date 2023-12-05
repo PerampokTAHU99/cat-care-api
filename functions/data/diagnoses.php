@@ -9,15 +9,7 @@ function getDiagnoseById($params) {
         "SELECT * FROM diagnoses WHERE idDiagnose = " . $idDiagnose
     );
 
-    $result = array();
-    while ($row = $query -> fetch_assoc()) {
-        $result = array (
-            'idDiagnose' => $row['idDiagnose'],
-            'date' => $row['date'],
-            'idDisease ' => $row['idDisease'],
-            'userId' => $row['userId']
-        );
-    }
+    $result = $query->fetch_assoc();
 
     return Response::success($result);
 }
@@ -39,15 +31,15 @@ function getAllDiagnose() {
     }
 
     $result = array();
-    while ($row = mysqli_fetch_array($query)) {
+    while ($row = $query->fetch_array()) {
         array_push(
             $result,
-            array(
+            [
                 'idDiagnose' => $row['idDiagnose'],
                 'date' => $row['date'],
                 'idDisease ' => $row['idDisease'],
                 'userId' => $row['userId']
-            )
+            ]
         );
     }
 

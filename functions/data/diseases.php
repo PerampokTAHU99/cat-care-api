@@ -8,18 +8,7 @@ function getDiseaseById($params) {
         "SELECT * FROM diseases WHERE idDisease = " . $idDisease
     );
 
-    while ($row = $query->fetch_assoc()) {
-        $result = array(
-            'idDisease' => $row['idDisease'],
-            'codeOfDisease' => $row['codeOfDisease'],
-            'nameOfDisease' => $row['nameOfDisease'],
-            'latinNameOfDisease' => $row['latinNameOfDisease'],
-            'picture' => $row['picture'],
-            'description' => $row['description'],
-            'precaution' => $row['precaution'],
-            'solution' => $row['solution'],
-        );
-    }
+    $result = $query->fetch_assoc();
 
     return Response::success($result);
 }
@@ -31,17 +20,20 @@ function getAllDisease() {
     );
 
     $result = array();
-    while ($row = mysqli_fetch_array($query)) {
-        array_push($result, array(
-            'idDisease' => $row['idDisease'],
-            'codeOfDisease' => $row['codeOfDisease'],
-            'nameOfDisease' => $row['nameOfDisease'],
-            'latinNameOfDisease' => $row['latinNameOfDisease'],
-            'picture' => $row['picture'],
-            'description' => $row['description'],
-            'precaution' => $row['precaution'],
-            'solution' => $row['solution'],
-        ));
+    while ($row = $query->fetch_array()) {
+        array_push(
+            $result,
+            [
+                'idDisease' => $row['idDisease'],
+                'codeOfDisease' => $row['codeOfDisease'],
+                'nameOfDisease' => $row['nameOfDisease'],
+                'latinNameOfDisease' => $row['latinNameOfDisease'],
+                'picture' => $row['picture'],
+                'description' => $row['description'],
+                'precaution' => $row['precaution'],
+                'solution' => $row['solution'],
+            ]
+        );
     }
 
     return Response::success($result);

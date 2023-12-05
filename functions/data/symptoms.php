@@ -8,14 +8,7 @@ function getSymptomById($params) {
         "SELECT * FROM symptoms WHERE idSymptom = " . $idSymptom
     );
 
-    $result = array();
-    while ($row = $query -> fetch_assoc()) {
-        $result = array (
-            'idSymptom' => $row['idSymptom'],
-            'codeOfSymptom' => $row['codeOfSymptom'],
-            'descOfSymptom' => $row['descOfSymptom']
-        );
-    }
+    $result = $query->fetch_assoc();
 
     return Response::success($result);
 }
@@ -27,12 +20,15 @@ function getAllSymptom() {
     );
 
     $result = array();
-    while ($row = mysqli_fetch_array($query)) {
-        array_push($result, array(
-            'idSymptom' => $row['idSymptom'],
-            'codeOfSymptom' => $row['codeOfSymptom'],
-            'descOfSymptom' => $row['descOfSymptom']
-        ));
+    while ($row = $query->fetch_array()) {
+        array_push(
+            $result,
+            [
+                'idSymptom' => $row['idSymptom'],
+                'codeOfSymptom' => $row['codeOfSymptom'],
+                'descOfSymptom' => $row['descOfSymptom']
+            ]
+        );
     }
 
     return Response::success($result);
