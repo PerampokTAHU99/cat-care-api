@@ -1,14 +1,11 @@
 <?php
-require_once __DIR__ . '/../../config.php';
-require_once __DIR__ . '/../auth.php';
+require_once 'functions/auth.php';
 
 function getDiagnoseById($params) {
-    global $link;
-
     $idDiagnose = $params['id'];
 
     $query = mysqli_query(
-        $link,
+        Config::$link,
         "SELECT * FROM diagnoses WHERE idDiagnose = " . $idDiagnose
     );
 
@@ -22,30 +19,21 @@ function getDiagnoseById($params) {
         );
     }
 
-    header('Content-Type: application/json', true, 200);
-    echo json_encode(
-        array(
-            'status' => 200,
-            'message' => "Success",
-            'result' => $result
-        )
-    );
+    return Response::success($result);
 }
 
 function getAllDiagnose() {
-    global $link;
-
     auth();
 
     if ($_SESSION['roleId'] == 4002) {
         $query = mysqli_query(
-            $link,
+            Config::$link,
             "SELECT * FROM diagnoses"
         );
     }
     else {
         $query = mysqli_query(
-            $link,
+            Config::$link,
             "SELECT * FROM diagnoses WHERE userid = {$_SESSION['userId']}"
         );
     }
@@ -63,14 +51,7 @@ function getAllDiagnose() {
         );
     }
 
-    header('Content-Type: application/json', true, 200);
-    echo json_encode(
-        array(
-            'status' => 200,
-            'message' => "Success",
-            'result' => $result
-        )
-    );
+    return Response::success($result);
 }
 
 ?>

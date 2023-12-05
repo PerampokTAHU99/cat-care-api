@@ -1,13 +1,10 @@
 <?php
-require_once __DIR__ . '/../../config.php';
 
 function getSymptomById($params) {
-    global $link;
-
     $idSymptom = $params['id'];
     
     $query = mysqli_query(
-        $link,
+        Config::$link,
         "SELECT * FROM symptoms WHERE idSymptom = " . $idSymptom
     );
 
@@ -20,20 +17,14 @@ function getSymptomById($params) {
         );
     }
 
-    header('Content-Type: application/json', true, 200);
-    echo json_encode(
-        array(
-            'status' => 200,
-            'message' => "Success",
-            'result' => $result
-        )
-    );
+    return Response::success($result);
 }
 
 function getAllSymptom() {
-    global $link;
-
-    $query = mysqli_query($link, "SELECT * FROM symptoms ORDER BY descOfSymptom");
+    $query = mysqli_query(
+        Config::$link,
+        "SELECT * FROM symptoms ORDER BY descOfSymptom"
+    );
 
     $result = array();
     while ($row = mysqli_fetch_array($query)) {
@@ -44,14 +35,7 @@ function getAllSymptom() {
         ));
     }
 
-    header('Content-Type: application/json', true, 200);
-    echo json_encode(
-        array(
-            'status' => 200,
-            'message' => "Success",
-            'result' => $result
-        )
-    );
+    return Response::success($result);
 }
 
 ?>

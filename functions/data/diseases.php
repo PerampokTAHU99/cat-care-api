@@ -1,13 +1,10 @@
 <?php
-require_once __DIR__ . '/../../config.php';
 
 function getDiseaseById($params) {
-    global $link;
-
     $idDisease = $params['id'];
 
     $query = mysqli_query(
-        $link,
+        Config::$link,
         "SELECT * FROM diseases WHERE idDisease = " . $idDisease
     );
 
@@ -24,20 +21,14 @@ function getDiseaseById($params) {
         );
     }
 
-    header('Content-Type: application/json', true, 200);
-    echo json_encode(
-        array(
-            'status' => 200,
-            'message' => "Success",
-            'result' => $result
-        )
-    );
+    return Response::success($result);
 }
 
 function getAllDisease() {
-    global $link;
-
-    $query = mysqli_query($link, "SELECT * FROM diseases ORDER BY nameOfDisease");
+    $query = mysqli_query(
+        Config::$link,
+        "SELECT * FROM diseases ORDER BY nameOfDisease"
+    );
 
     $result = array();
     while ($row = mysqli_fetch_array($query)) {
@@ -53,14 +44,7 @@ function getAllDisease() {
         ));
     }
 
-    header('Content-Type: application/json', true, 200);
-    echo json_encode(
-        array(
-            'status' => 200,
-            'message' => "Success",
-            'result' => $result
-        )
-    );
+    return Response::success($result);
 }
 
 ?>
