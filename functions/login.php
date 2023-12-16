@@ -13,11 +13,15 @@ function login() {
     $password = $postData['password'];
 
     $sql = "SELECT userId, name, username, email, password, roleId
-            FROM users WHERE username = '$username' AND password = '$password'";
+            FROM users WHERE username = '$username'";
     $query = mysqli_query(Config::$link, $sql);
     $data = mysqli_fetch_assoc($query);
 
     if (empty($data)) {
+        return Response::error("Username belum terdaftar, silahkan lakukan Registrasi.", 401);
+    }
+
+    if ($data['password'] != $password) {
         return Response::error("Username atau Password salah.", 401);
     }
 
@@ -35,6 +39,7 @@ function login() {
     return Response::custom([
         'status' => 200,
         'message' => "Login Berhasil.",
+        'result' => $payload,
         'token' => $jwt
     ], 200);
 }
