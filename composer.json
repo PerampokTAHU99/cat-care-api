@@ -7,6 +7,7 @@
     "autoload": {
         "files": [
             "config.php",
+            "functions/helpers/request.php",
             "functions/helpers/response.php"
         ]
     }
