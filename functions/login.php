@@ -2,8 +2,7 @@
 use Firebase\JWT\JWT;
 
 function login() {
-    $rawPostData = file_get_contents("php://input");
-    $postData = json_decode($rawPostData, true);
+    $postData = Request::$body;
 
     if (!isset($postData['username']) || !isset($postData['password'])) {
         return Response::error("Harap masukkan username dan password.", 400);
