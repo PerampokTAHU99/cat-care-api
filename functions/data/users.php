@@ -1,64 +1,63 @@
 <?php
-require_once __DIR__ . '/../../config.php';
 
-function getAllUser() {
-    global $link;
+function getUserById($params) {
+    $userId = $params['id'];
 
-    auth();
-
-    $query = mysqli_query($link, "SELECT * FROM users");
-
-    $result = array();
-    while ($row = mysqli_fetch_array($query)) {
-        array_push($result, array(
-            'userId' => $row['userId'],
-            'name' => $row['name'],
-            'username ' => $row['username'],
-            'email' => $row['email'],
-            'password' => $row['password'],
-            'roleId ' => $row['roleId']
-        ));
-    }
-
-    header('Content-Type: application/json', true, 200);
-    echo json_encode(
-        array(
-            'status' => 200,
-            'message' => "Success",
-            'result' => $result
-        )
+    $query = mysqli_query(
+        Config::$link,
+        "SELECT * FROM users WHERE userId = " . $userId
     );
+
+    $result = $query->fetch_assoc();
+
+    return Response::success($result);
 }
 
-function getUserByRoleId($params) {
-    global $link;
+function createUser() {
+    $postData = Request::$body;
 
-    auth();
+    if (
+        !isset($postData['name'])
+        || !isset($postData['username'])
+        || !isset($postData['email'])
+        || !isset($postData['password'])
+        || !isset($postData['roleId'])
+    ) { return Response::error("Harap isi semua kolom.", 400); }
 
-    $roleId = $params['roleId'];
+    $name = $postData['name'];
+    $username = $postData['username'];
+    $email = $postData['email'];
+    $password = $postData['password'];
+    $roleId = $postData['roleId'];
 
-    $query = mysqli_query($link, "SELECT * FROM users WHERE roleId = ". $roleId);
+    $usernameExist = mysqli_query(
+        Config::$link,
+        "SELECT * FROM users WHERE username = '{$username}'"
+    )->fetch_assoc();
 
-    $result = array();
-    while ($row = $query -> fetch_assoc()) {
-        $result = array (
-            'userId' => $row['userId'],
-            'name' => $row['name'],
-            'username ' => $row['username'],
-            'email' => $row['email'],
-            'password' => $row['password'],
-            'roleId ' => $row['roleId']
-        );
+    $emailExist = mysqli_query(
+        Config::$link,
+        "SELECT * FROM users WHERE email = '{$email}'"
+    )->fetch_assoc();
+
+    if ($usernameExist || $emailExist) {
+        return Response::error("Username atau Email sudah terdaftar.", 400);
     }
 
-    header('Content-Type: application/json', true, 200);
-    echo json_encode(
-        array(
-            'status' => 200,
-            'message' => "Success",
-            'result' => $result
-        )
+    $sql = "INSERT INTO users (name, username, email, password, roleId)
+            VALUES('{$name}', '{$username}', '{$email}', '{$password}', {$roleId})";
+
+    $query = mysqli_query(
+        Config::$link,
+        $sql
     );
+
+    if ($query) {
+        return Response::success(null, 201);
+    }
+    else {
+        return Response::error("Gagal menyimpan data ke database.");
+    }
 }
 
 ?>
