@@ -65,7 +65,7 @@ switch ($routeInfo[0]) {
                 array(
                     'status' => 500,
                     'message' => "Koneksi ke Database GAGAL (Configuration Error).",
-                    'debug' => "{$e}"
+                    'debug' => "{$e}" # TODO: Implement Debugging Mode Response
                 )
             );
         }
