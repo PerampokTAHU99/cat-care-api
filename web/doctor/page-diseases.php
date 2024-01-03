@@ -269,7 +269,7 @@ require '../function.php';
                                                 <td><?= $latinDisease ?></td>
                                                 <?php
                                                     $protocol = isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? 'https://' : 'http://';
-                                                    $host = $_SERVER['HTTP_HOST'] . '/' . 'cat-care/' . 'cat-care-img/';
+                                                    $host = $_SERVER['HTTP_HOST'] . '/' . 'img/';
                                                     $rootUrl = $protocol . $host;
                                                 ?>
                                                 <td><img src="<?= $rootUrl . $pictureDisease ?>" alt="Picture <?= $nameDisease ?> " width="250"></td>

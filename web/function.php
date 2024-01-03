@@ -238,7 +238,7 @@ if (isset($_POST['deleteSymptom'])) {
 //upload picture
 function upload()
 {
-    $targetDir = $_SERVER['DOCUMENT_ROOT'] . '/' . 'cat-care/' . 'cat-care-img/'; // Directory where you want to save the uploaded images
+    $targetDir = $_SERVER['DOCUMENT_ROOT'] . '/' . 'img/'; // Directory where you want to save the uploaded images
     $nameExt = explode('.', $_FILES["picture"]["name"]);
     $nameExt = end($nameExt);
     $nameFile = basename(time() . '.' . $nameExt);
