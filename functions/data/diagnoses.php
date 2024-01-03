@@ -32,12 +32,26 @@ function getAllDiagnose() {
 
     $result = array();
     while ($row = $query->fetch_array()) {
+        $diseaseData = mysqli_query(
+            Config::$link,
+            "SELECT * FROM diseases WHERE idDisease = {$row['idDisease']}"
+        )->fetch_assoc();
+
         array_push(
             $result,
             [
                 'idDiagnose' => $row['idDiagnose'],
-                'date' => $row['date'],
-                'idDisease ' => $row['idDisease'],
+                'disease' => [
+                    'idDisease' => $diseaseData['idDisease'],
+                    'codeOfDisease' => $diseaseData['codeOfDisease'],
+                    'nameOfDisease' => $diseaseData['nameOfDisease'],
+                    'latinNameOfDisease' => $diseaseData['latinNameOfDisease'],
+                    'picture' => $diseaseData['picture'],
+                    'description' => $diseaseData['description'],
+                    'precaution' => $diseaseData['precaution'],
+                    'solution' => $diseaseData['solution'],
+                    'date' => $row['date'],
+                ],
                 'userId' => $row['userId']
             ]
         );
